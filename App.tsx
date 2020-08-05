@@ -1,26 +1,46 @@
+//import 'react-native-gesture-handler';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ScreenMap} from './src/components/Map';
+// import {Button} from 'react-native';
+// import {ScreenMap} from './src/components/Map';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {StartScreen} from './src/components/StartScreen';
+import {SearchScreen} from './src/components/SearchScreen';
 
 declare const global: {HermesInternal: null | {}};
 
+const Tab = createBottomTabNavigator();
+
 const App = () => {
   return (
-    <View style={styles.container}>
-      <ScreenMap />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        tabBarOptions={{
+          activeTintColor: 'tomato',
+          inactiveTintColor: 'gray',
+          labelStyle: {
+            fontSize: 20,
+          },
+          tabStyle: {
+            justifyContent: 'center',
+          },
+        }}>
+        <Tab.Screen name="Map" component={StartScreen} />
+        <Tab.Screen name="Search" component={SearchScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#eee',
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    width: '100%',
-    height: '100%',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     backgroundColor: '#eee',
+//     // flex: 1,
+//     // justifyContent: 'center',
+//     // alignItems: 'center',
+//     width: '100%',
+//     height: '100%',
+//   },
+// });
 
 export default App;
