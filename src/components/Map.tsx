@@ -94,7 +94,6 @@ export const ScreenMap = () => {
 
   return (
     <View style={styles.container}>
-      {/* {console.log(dailyWeather?.name)} */}
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}

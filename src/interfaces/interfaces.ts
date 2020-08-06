@@ -38,32 +38,6 @@ interface WeatherItem {
   main: string;
 }
 
-// const AutoCompleteCity = {
-  // description: 'Talladega Superspeedway, Speedway Blvd, Lincoln, AL, USA',
-  // id: 'e98cadb3ad4bd0c7715b6f51738172fe38222028',
-  // matched_substrings: [
-  //   {
-  //     length: 4,
-  //     offset: 0,
-  //   },
-  // ],
-  // place_id: 'ChIJqdwHaL7Pi4gRW-aSKeYTJKw',
-  // reference: 'ChIJqdwHaL7Pi4gRW-aSKeYTJKw',
-  // structured_formatting: {
-  //   main_text: 'Talladega Superspeedway',
-  //   main_text_matched_substrings: [[Object]],
-  //   secondary_text: 'Speedway Blvd, Lincoln, AL, USA',
-  // },
-  // terms: [
-  //   {offset: 0, value: 'Talladega Superspeedway'},
-  //   {offset: 25, value: 'Speedway Blvd'},
-  //   {offset: 40, value: 'Lincoln'},
-  //   {offset: 49, value: 'AL'},
-  //   {offset: 53, value: 'USA'},
-  // ],
-  // types: ['rv_park', 'lodging', 'point_of_interest', 'establishment'],
-// };
-
 export interface CityPlacesAPI {
   description: string;
   id: string;
@@ -89,4 +63,78 @@ interface StructuredFormatting {
 interface Term {
   offset: number;
   value: string;
+}
+
+export interface CityInformation {
+  location: {
+    country: string;
+    lat: number;
+    localtime: string;
+    localtime_epoch: number;
+    lon: number;
+    name: string;
+    region: string;
+    tz_id: string;
+  };
+}
+
+export interface DailyWeather {
+  dt: number;
+  sunrise: number;
+  sunset: number;
+  temp: {
+    day: number;
+    min: number;
+    max: number;
+    night: number;
+    eve: number;
+    morn: number;
+  };
+  feels_like: {
+    day: number;
+    night: number;
+    eve: number;
+    morn: number;
+  };
+  pressure: number;
+  humidity: number;
+  dew_point: number;
+  wind_speed: number;
+  wind_deg: number;
+  weather: DailyWeatherDescription[];
+  clouds: {all: number};
+  pop: number;
+  rain: number;
+  uvi: number;
+}
+
+interface DailyWeatherDescription {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+}
+
+export interface WeeklyWeather {
+  lat: number;
+  lon: number;
+  timezone: string;
+  timezone_offset: number;
+  current: {
+    dt: number;
+    sunrise: number;
+    sunset: number;
+    temp: number;
+    feels_like: number;
+    pressure: number;
+    humidity: number;
+    dew_point: number;
+    uvi: number;
+    clouds: number;
+    visibility: number;
+    wind_speed: number;
+    wind_deg: number;
+    weather: DailyWeatherDescription[];
+  };
+  daily: DailyWeather[];
 }

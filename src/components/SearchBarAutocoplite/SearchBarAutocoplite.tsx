@@ -1,19 +1,12 @@
-import React, {useState} from 'react';
-import {
-  GooglePlacesAutocomplete,
-  GooglePlaceData,
-} from 'react-native-google-places-autocomplete';
+import React from 'react';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {GOOGLE_PLACES_API_KEY} from '../constants/constants';
-import {CityPlacesAPI} from 'src/interfaces/interfaces';
 
 interface Props {
   onPressFindCity: Function;
 }
 
 export const GooglePlacesInput = (props: Props): JSX.Element => {
-  // const [searchedCity, setSearchedCity] = useState<GooglePlaceData | null>(null);
-
-  // console.log(searchedCity);
   const {onPressFindCity} = props;
 
   return (
@@ -28,7 +21,10 @@ export const GooglePlacesInput = (props: Props): JSX.Element => {
         key: GOOGLE_PLACES_API_KEY,
         language: 'en',
       }}
-      onPress={(data, details = null) => onPressFindCity(data)}
+      onPress={(data, details = null) => {
+        console.log(data);
+        onPressFindCity(data);
+      }}
       onFail={(error) => console.log(error)}
       requestUrl={{
         url: 'https://maps.googleapis.com/maps/api',
