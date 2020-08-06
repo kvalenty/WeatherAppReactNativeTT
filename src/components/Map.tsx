@@ -56,7 +56,7 @@ export const ScreenMap = () => {
     initialRegion,
   );
   const [dailyWeather, setDailyWeather] = useState<DailyWeather | null>(null);
-  // const [isVisible, setIsVisible] = useState<Boolean>(false);
+  const [isVisible, setIsVisible] = useState<Boolean>(false);
   const {latitude, longitude} = markerCoordinates;
   const url = getUrlDaily(latitude, longitude);
 
@@ -72,7 +72,7 @@ export const ScreenMap = () => {
 
   const onLongPressGetCoordinates = ({nativeEvent}: MapEvent): void => {
     setMarkerCoordinates(nativeEvent.coordinate);
-    // setIsVisible(false);
+    setIsVisible(false);
   };
 
   const onPanDragGetCoordinates = (region: Region): void => {
@@ -81,10 +81,11 @@ export const ScreenMap = () => {
 
   const coordinate = {latitude, longitude};
 
-  const onPress = async () => {
+  const onPress = async (event: any) => {
+    event.preventDefault();
     const loadedWeather = await loadData<DailyWeather>(url);
 
-    // setIsVisible(true);
+    setIsVisible(true);
     setDailyWeather(loadedWeather);
   };
 
@@ -93,7 +94,7 @@ export const ScreenMap = () => {
 
   return (
     <View style={styles.container}>
-      {console.log(dailyWeather?.name)}
+      {/* {console.log(dailyWeather?.name)} */}
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -104,16 +105,16 @@ export const ScreenMap = () => {
           coordinate={coordinate}
           onPress={onPress}
           icon={require('../images/marker-icon.png')}>
-          {/* {isVisible && ( */}
-          <Callout>
-            <View>
-              <Text>{name}</Text>
+          {isVisible && (
+            <Callout>
               <View>
-                <Text>{temp}</Text>
+                <Text>{name}</Text>
+                <View>
+                  <Text>{temp}</Text>
+                </View>
               </View>
-            </View>
-          </Callout>
-          {/* )} */}
+            </Callout>
+          )}
         </Marker>
       </MapView>
     </View>
