@@ -1,0 +1,2 @@
+- install dependency -- `npm install` or `npm i`
+- run project -- `npx react-native run-android`
