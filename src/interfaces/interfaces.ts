@@ -108,7 +108,7 @@ export interface DailyWeather {
   uvi: number;
 }
 
-interface DailyWeatherDescription {
+export interface DailyWeatherDescription {
   id: number;
   main: string;
   description: string;

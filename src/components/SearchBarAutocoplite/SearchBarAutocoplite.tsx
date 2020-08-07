@@ -16,13 +16,12 @@ export const GooglePlacesInput = (props: Props): JSX.Element => {
           console.log('Edited');
         },
       }}
-      placeholder="Type City name..."
+      placeholder="Type City name and chose one..."
       query={{
         key: GOOGLE_PLACES_API_KEY,
         language: 'en',
       }}
-      onPress={(data, details = null) => {
-        console.log(data);
+      onPress={(data) => {
         onPressFindCity(data);
       }}
       onFail={(error) => console.log(error)}
@@ -33,11 +32,14 @@ export const GooglePlacesInput = (props: Props): JSX.Element => {
       debounce={300}
       styles={{
         textInputContainer: {
-          backgroundColor: 'rgba(0,0,0,0)',
+          backgroundColor: 'rgba(0,5,6,0)',
           borderTopWidth: 0,
           borderBottomWidth: 0,
+          justifyContent: 'center',
         },
         textInput: {
+          marginTop: 0,
+          marginBottom: 0,
           marginLeft: 0,
           marginRight: 0,
           height: 38,

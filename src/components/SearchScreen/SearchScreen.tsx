@@ -1,17 +1,22 @@
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {GooglePlacesInput} from './SearchBarAutocoplite/SearchBarAutocoplite';
+import {GooglePlacesInput} from '../SearchBarAutocoplite/SearchBarAutocoplite';
 import {Button, View} from 'react-native';
-import {getUrlForDays, getCityInformation} from './api/getUrl';
-import {loadData} from './api/weatherApi';
+import {getUrlForDays, getCityInformation} from '../api/getUrl';
+import {loadData} from '../api/weatherApi';
 import {GooglePlaceData} from 'react-native-google-places-autocomplete';
 import {CityInformation, WeeklyWeather} from 'src/interfaces/interfaces';
+import {WeatherList} from '../WeatherList/WeatherList';
 
 export const SearchScreen = () => {
   const [searchedCity, setSearchedCity] = useState<GooglePlaceData | null>(
     null,
   );
-  const [searchedCityWeather, setSearchedCityWeather] = useState<WeeklyWeather | null>(null);
+
+  const [
+    searchedCityWeather,
+    setSearchedCityWeather,
+  ] = useState<WeeklyWeather | null>(null);
 
   const onPressFindCity = (city: GooglePlaceData) => {
     setSearchedCity(city);
@@ -36,30 +41,35 @@ export const SearchScreen = () => {
     getData();
   };
 
+  const daily = searchedCityWeather?.daily;
+
   return (
     <View style={styles.screenContainer}>
-      <GooglePlacesInput onPressFindCity={onPressFindCity} />
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Search"
-          accessibilityLabel="Search weather in choosen city"
-          onPress={() => onPressGetWeather()}
-        />
+      <View style={styles.searchBar}>
+        <GooglePlacesInput onPressFindCity={onPressFindCity} />
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Search"
+            accessibilityLabel="Search weather in choosen city"
+            onPress={onPressGetWeather}
+            color="tomato"
+          />
+        </View>
       </View>
+      {searchedCityWeather && <WeatherList daily={daily} />}
     </View>
   );
 };
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    justifyContent: 'center',
-    padding: 16,
     backgroundColor: '#eee',
   },
+  searchBar: {
+    flexDirection: 'row',
+    padding: 10,
+  },
   buttonContainer: {
-    height: 80,
-    margin: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginLeft: 5,
   },
 });

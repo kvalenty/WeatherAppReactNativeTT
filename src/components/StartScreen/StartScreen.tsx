@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {ScreenMap} from './Map';
+import {ScreenMap} from '../ScreenMap/ScreenMap';
 
 const styles = StyleSheet.create({
   container: {

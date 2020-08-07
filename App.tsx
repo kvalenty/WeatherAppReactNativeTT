@@ -1,11 +1,8 @@
-//import 'react-native-gesture-handler';
 import React from 'react';
-// import {Button} from 'react-native';
-// import {ScreenMap} from './src/components/Map';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StartScreen} from './src/components/StartScreen';
-import {SearchScreen} from './src/components/SearchScreen';
+import {StartScreen} from './src/components/StartScreen/StartScreen';
+import {SearchScreen} from './src/components/SearchScreen/SearchScreen';
 
 declare const global: {HermesInternal: null | {}};
 
