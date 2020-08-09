@@ -1,3 +1,8 @@
+export interface Coordinates {
+  latitude: number;
+  longitude: number;
+}
+
 export interface DailyWeather {
   base: string;
   clouds: {all: number};
@@ -76,6 +81,32 @@ export interface CityInformation {
     region: string;
     tz_id: string;
   };
+}
+
+export interface GoogleCityInformation {
+  html_attributions: any[];
+  result: GoogleCityInformationResult;
+  status: string;
+}
+
+interface GoogleCityInformationResult {
+  geometry: {
+    location: {
+      lat: number;
+      lng: number;
+    };
+    viewport: {
+      northeast: {
+        lat: number;
+        lng: number;
+      };
+      southwest: {
+        lat: number;
+        lng: number;
+      };
+    };
+  };
+  name: string;
 }
 
 export interface DailyWeather {

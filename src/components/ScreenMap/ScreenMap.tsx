@@ -6,15 +6,10 @@ import MapView, {
   Callout,
 } from 'react-native-maps';
 import {View, StyleSheet, Text} from 'react-native';
-import {getUrlDaily} from '../api/getUrl';
+import {getUrlDailyWeather} from '../api/getUrl';
 import {loadData} from '../api/weatherApi';
-import {DailyWeather} from 'src/interfaces/interfaces';
+import {DailyWeather, Coordinates} from 'src/interfaces/interfaces';
 import {DEGREE} from '../constants/constants';
-
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-}
 
 interface Region {
   latitude: number;
@@ -41,11 +36,14 @@ export const ScreenMap = () => {
   );
 
   const [dailyWeather, setDailyWeather] = useState<DailyWeather | null>(null);
-  const {latitude, longitude} = markerCoordinates;
-  const url = getUrlDaily(latitude, longitude);
+  const url = getUrlDailyWeather(markerCoordinates);
 
-  const onLongPressGetCoordinates = async ({nativeEvent}: MapEvent) => {
-    setMarkerCoordinates(nativeEvent.coordinate);
+  const onLongPressGetCoordinates = async (event: MapEvent) => {
+    const {
+      nativeEvent: {coordinate},
+    } = event;
+
+    setMarkerCoordinates(coordinate);
 
     const loadedWeather = await loadData<DailyWeather>(url);
 
@@ -54,6 +52,7 @@ export const ScreenMap = () => {
 
   const name = dailyWeather?.name;
   const temperature = Math.round(dailyWeather?.main.temp || 0);
+
   return (
     <View style={styles.container}>
       <MapView

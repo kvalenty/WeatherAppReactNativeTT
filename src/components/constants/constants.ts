@@ -14,3 +14,4 @@ export const DAYS = [
 ];
 
 export const DEGREE = 'C\u00B0';
+export const DEFAULT_CITY_ID = 'ChIJBUVa4U7P1EAR_kYBF9IxSXY';

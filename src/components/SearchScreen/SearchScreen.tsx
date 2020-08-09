@@ -2,16 +2,19 @@ import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {GooglePlacesInput} from '../SearchBarAutocoplite/SearchBarAutocoplite';
 import {Button, View} from 'react-native';
-import {getUrlForDays, getCityInformation} from '../api/getUrl';
+import {getUrlForDays, getUrlCityCoordinates} from '../api/getUrl';
 import {loadData} from '../api/weatherApi';
 import {GooglePlaceData} from 'react-native-google-places-autocomplete';
-import {CityInformation, WeeklyWeather} from 'src/interfaces/interfaces';
+import {
+  WeeklyWeather,
+  GoogleCityInformation,
+  Coordinates,
+} from 'src/interfaces/interfaces';
 import {WeatherList} from '../WeatherList/WeatherList';
+import {DEFAULT_CITY_ID} from '../constants/constants';
 
 export const SearchScreen = () => {
-  const [searchedCity, setSearchedCity] = useState<GooglePlaceData | null>(
-    null,
-  );
+  const [searchedCity, setSearchedCity] = useState<GooglePlaceData | null>(null);
 
   const [
     searchedCityWeather,
@@ -23,16 +26,21 @@ export const SearchScreen = () => {
   };
 
   const onPressGetWeather = () => {
-    const urlInformation: string = getCityInformation(
-      searchedCity?.structured_formatting.main_text || 'Kiev',
+    const urlInformation: string = getUrlCityCoordinates(
+      searchedCity?.place_id || DEFAULT_CITY_ID,
     );
     const getData = async () => {
-      const cityInformation: CityInformation = await loadData(urlInformation);
+      const {result}: GoogleCityInformation = await loadData(urlInformation);
+      const {
+        geometry: {location},
+      } = result;
 
-      const urlWeather: string = getUrlForDays(
-        cityInformation.location.lat,
-        cityInformation.location.lon,
-      );
+      const coordinates: Coordinates = {
+        latitude: location.lat,
+        longitude: location.lng,
+      };
+
+      const urlWeather: string = getUrlForDays(coordinates);
       const loadedData: WeeklyWeather = await loadData(urlWeather);
 
       setSearchedCityWeather(loadedData);
@@ -60,6 +68,7 @@ export const SearchScreen = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,

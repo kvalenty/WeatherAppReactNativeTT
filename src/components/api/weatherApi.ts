@@ -1,5 +1,5 @@
 export const loadData = async <T>(url: string): Promise<T> => {
-  const responsed = await fetch(url).then((response) => response.json());
+  const responsed = await fetch(url);
 
-  return responsed;
+  return responsed.json();
 };
