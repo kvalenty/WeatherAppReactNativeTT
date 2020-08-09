@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
-import {GooglePlacesInput} from '../SearchBarAutocoplite/SearchBarAutocoplite';
+import {GooglePlacesInput} from '../SearchBarAutocoplite/SearchBarAutocoplete';
 import {Button, View} from 'react-native';
 import {getUrlForDays, getUrlCityCoordinates} from '../api/getUrl';
 import {loadData} from '../api/weatherApi';

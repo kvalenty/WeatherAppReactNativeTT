@@ -1,4 +1,4 @@
 - install dependency -- `npm install` or `npm i`
 - run project -- `npx react-native run-android`
 -example how to run app [demo](https://www.loom.com/share/00c257f05ec4499a9407f46d041ecc09)
--example how app works [demo](https://www.loom.com/share/ffc5337ad3194148a06d89b2d4f109c2)
+-example how app works [demo](https://www.loom.com/share/6d37b4ac306f4698a4522f494a6c3a0d)
