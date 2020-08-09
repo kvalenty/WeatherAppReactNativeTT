@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const StartScreen = () => {
+export const StartScreen = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <ScreenMap />

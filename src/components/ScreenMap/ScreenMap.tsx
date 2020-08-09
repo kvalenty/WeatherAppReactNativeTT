@@ -1,42 +1,18 @@
 import React, {useState} from 'react';
-import MapView, {
-  PROVIDER_GOOGLE,
-  Marker,
-  MapEvent,
-  Callout,
-} from 'react-native-maps';
-import {View, StyleSheet, Text} from 'react-native';
+import MapView, {PROVIDER_GOOGLE, MapEvent} from 'react-native-maps';
+import {View, StyleSheet} from 'react-native';
 import {getUrlDailyWeather} from '../api/getUrl';
 import {loadData} from '../api/weatherApi';
 import {DailyWeather, Coordinates} from 'src/interfaces/interfaces';
-import {DEGREE} from '../constants/constants';
+import {initialMarkerCoordinates, initialRegion} from '../constants/constants';
+import {MapMarker} from '../MapMarker/MapMarker';
 
-interface Region {
-  latitude: number;
-  longitude: number;
-  latitudeDelta: number;
-  longitudeDelta: number;
-}
-
-const initialMarkerCoordinates: Coordinates = {
-  latitude: 0,
-  longitude: 0,
-};
-
-const initialRegion: Region = {
-  latitude: 50.45466,
-  latitudeDelta: 0.05,
-  longitude: 30.5238,
-  longitudeDelta: 0.05,
-};
-
-export const ScreenMap = () => {
+export const ScreenMap = (): JSX.Element => {
   const [markerCoordinates, setMarkerCoordinates] = useState<Coordinates>(
     initialMarkerCoordinates,
   );
 
   const [dailyWeather, setDailyWeather] = useState<DailyWeather | null>(null);
-  const url = getUrlDailyWeather(markerCoordinates);
 
   const onLongPressGetCoordinates = async (event: MapEvent) => {
     const {
@@ -44,14 +20,12 @@ export const ScreenMap = () => {
     } = event;
 
     setMarkerCoordinates(coordinate);
+    const url = getUrlDailyWeather(coordinate);
 
     const loadedWeather = await loadData<DailyWeather>(url);
 
     setDailyWeather(loadedWeather);
   };
-
-  const name = dailyWeather?.name;
-  const temperature = Math.round(dailyWeather?.main.temp || 0);
 
   return (
     <View style={styles.container}>
@@ -60,20 +34,10 @@ export const ScreenMap = () => {
         style={styles.map}
         onLongPress={onLongPressGetCoordinates}
         initialRegion={initialRegion}>
-        <Marker coordinate={markerCoordinates}>
-          <Callout style={styles.calloutWidth}>
-            <View style={styles.callout}>
-              <View style={styles.calloutItem}>
-                <Text style={styles.calloutText}>{name}</Text>
-              </View>
-              <View style={styles.calloutItem}>
-                <Text style={styles.calloutText}>
-                  {`${temperature} ${DEGREE}`}
-                </Text>
-              </View>
-            </View>
-          </Callout>
-        </Marker>
+        <MapMarker
+          coordinates={markerCoordinates}
+          dailyWeather={dailyWeather}
+        />
       </MapView>
     </View>
   );
@@ -84,23 +48,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  calloutWidth: {
-    height: 100,
-    width: 100,
-    overflow: 'scroll',
-  },
-  callout: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  calloutItem: {
-    paddingVertical: 5,
-  },
-  calloutText: {
-    fontSize: 15,
-    fontWeight: 'bold',
+    height: '100%',
   },
 });

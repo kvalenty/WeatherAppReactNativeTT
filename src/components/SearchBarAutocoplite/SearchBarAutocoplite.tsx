@@ -5,10 +5,11 @@ import {StyleSheet} from 'react-native';
 
 interface Props {
   onPressFindCity: Function;
+  currentCityPlaceHolder: string | null;
 }
 
 export const GooglePlacesInput = (props: Props): JSX.Element => {
-  const {onPressFindCity} = props;
+  const {onPressFindCity, currentCityPlaceHolder} = props;
 
   return (
     <GooglePlacesAutocomplete
@@ -17,7 +18,7 @@ export const GooglePlacesInput = (props: Props): JSX.Element => {
           console.log('Edited');
         },
       }}
-      placeholder="Type City name and chose one..."
+      placeholder={currentCityPlaceHolder || 'Type City name and chose one...'}
       query={{
         key: GOOGLE_PLACES_API_KEY,
         language: 'en',
